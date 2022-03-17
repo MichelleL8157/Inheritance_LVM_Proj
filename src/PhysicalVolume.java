@@ -1,12 +1,17 @@
-public class PhysicalVolume {
-    private static String UUID;
-    private String name;
-    private PhysicalHardDrive PV;
+import java.util.UUID;
 
-    public PhysicalVolume(String name, PhysicalHardDrive PV) {
+public class PhysicalVolume extends PhysicalHardDrive {
+    private String UUID;
+    private String pVName;
+    
+
+    public PhysicalVolume(String pVName, String pHDName) {
         UUID = RunnerHelp.makeUUID();
-        this.name = name;
-        this.PV = PV;
+
     }
 
+    public static String makeUUID() {
+        java.util.UUID u = java.util.UUID.randomUUID();
+        System.out.println(u.toString());
+    }
 }

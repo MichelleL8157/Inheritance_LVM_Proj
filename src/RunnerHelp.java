@@ -1,18 +1,22 @@
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class RunnerHelp { //Super class?
-    private static ArrayList<PhysicalVolume> PVList;
-    private static ArrayList<LogicalVolume> LVList;
-    private static ArrayList<PhysicalHardDrive> PHDList;
+public class RunnerHelp extends PhysicalHardDrive {
+    private ArrayList<PhysicalHardDrive> pHDList;
+    private ArrayList<String> checkPHDNames;
 
     public RunnerHelp() {
-        PVList = new ArrayList<PhysicalVolume>();
-        LVList = new ArrayList<LogicalVolume>();
-        PHDList = new ArrayList<PhysicalHardDrive>();
+        pHDList = new ArrayList<PhysicalHardDrive>();
+        checkPHDNames = new ArrayList<String>();
     }
 
+    public ArrayList<PhysicalHardDrive> getPHDList() {
+        return pHDList;
+    }
 
+    public void addPHDList(PhysicalHardDrive pV) {
+        pHDList.add(pV);
+    }
 
     public static String makeUUID() {
         UUID u = UUID.randomUUID();
