@@ -1,17 +1,14 @@
-import java.util.UUID;
+import java.util.ArrayList;
 
-public class PhysicalVolume extends PhysicalHardDrive {
-    private String UUID;
-    private String pVName;
-    
+public class PhysicalVolume extends RunnerHelp {
+    private ArrayList<PhysicalHardDrive> pVList;
 
-    public PhysicalVolume(String pVName, String pHDName) {
-        UUID = RunnerHelp.makeUUID();
+    public PhysicalVolume(String pVName, PhysicalHardDrive pHD) {
+        super(pVName);
+        pVList.add(pHD);
+    } //also has name, UUID
 
-    }
-
-    public static String makeUUID() {
-        java.util.UUID u = java.util.UUID.randomUUID();
-        System.out.println(u.toString());
-    }
+    public String getpVName() { return super.getName(); }
+    public ArrayList<PhysicalHardDrive> getpVListVList() { return pVList; }
+    public String getUUID() { return super.getUUIDuse(); }
 }

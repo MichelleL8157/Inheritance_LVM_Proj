@@ -1,26 +1,20 @@
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class RunnerHelp extends PhysicalHardDrive {
-    private ArrayList<PhysicalHardDrive> pHDList;
-    private ArrayList<String> checkPHDNames;
+public class RunnerHelp { //RH has PHD
+    private String name;
+    private String UUIDuse;
 
-    public RunnerHelp() {
-        pHDList = new ArrayList<PhysicalHardDrive>();
-        checkPHDNames = new ArrayList<String>();
+    public RunnerHelp(String name) {
+        this.name = name;
+        UUIDuse = makeUUID();
     }
 
-    public ArrayList<PhysicalHardDrive> getPHDList() {
-        return pHDList;
-    }
-
-    public void addPHDList(PhysicalHardDrive pV) {
-        pHDList.add(pV);
-    }
+    public String getName() { return name; }
+    public String getUUIDuse() { return UUIDuse; }
 
     public static String makeUUID() {
         UUID u = UUID.randomUUID();
         System.out.println(u.toString());
     }
 }
-
