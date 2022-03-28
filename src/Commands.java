@@ -51,15 +51,18 @@ public class Commands {
                         break;
                     }
                 }
-                for (PhysicalHardDrive pHDTest : pHDList) {
-                    if (pHDTest.getName().equals(driveName)) {
-                        PhysicalHardDrive pHD = pHDTest;
-                        pVList.add(pV);
-                        pHDListUsed.add(pHD);
-                        System.out.println(volName + " created");
-                        break;
+                if (goOn) {
+                    for (PhysicalHardDrive pHDTest : pHDList) {
+                        if (pHDTest.getName().equals(driveName)) {
+                            PhysicalHardDrive pHD = pHDTest;
+                            pVList.add(pV);
+                            pHDListUsed.add(pHD);
+                            System.out.println(volName + " created");
+                            break;
+                        }
                     }
                 }
+
             }
         } else if (command.equals("pvlist")) {
             for (int i = 0; i != pVList.size(); i++) {
@@ -90,8 +93,27 @@ public class Commands {
             if (!exists) {
                 System.out.println("error: Physical Volume specified doesn't exist");
             } else {
+                boolean goOn = true;
                 for (VolumeGroup vGTest: vGList) {
-                    if (vGTest.getpVList().contains(pV))
+                    ArrayList<PhysicalVolume> pVListTest = vGTest.getpVList();
+                    for (PhysicalVolume pVTest: pVListTest) {
+                        if (pVTest.getName().equals(pVName)) {
+                            System.out.println("error: Physical Volume specific is part of another VG");
+                            goOn = false;
+                        }
+                    }
+                }
+                if (goOn) {
+                    for (VolumeGroup vGTest: vGList) {
+                        if (vGTest.getName().equals(volGName)) {
+                            goOn = false;
+                            System.out.println("error: Volume Group name already exists");
+                            break;
+                        }
+                    }
+                }
+                if (goOn) {
+                    VolumeGroup vG = new VolumeGroup(volGName, pV);
                 }
             }
 

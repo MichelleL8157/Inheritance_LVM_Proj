@@ -2,12 +2,11 @@ import java.util.ArrayList;
 
 public class VolumeGroup extends RunnerHelp {
     private ArrayList<PhysicalVolume> pVList;
-    private ArrayList<LogicalVolume> lVList;
+    private ArrayList<LogicalVolume> lVList; //no longer in constructor so checl
 
-    public VolumeGroup(String vGName, PhysicalVolume pV, LogicalVolume lV) { //list of PV
+    public VolumeGroup(String vGName, PhysicalVolume pV) { //list of PV
         super(vGName);
         pVList.add(pV);
-        lVList.add(lV);
     }
 
     public String getVgName () { return super.getName(); }
