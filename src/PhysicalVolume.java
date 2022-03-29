@@ -1,3 +1,4 @@
+import java.sql.Array;
 import java.util.ArrayList;
 
 public class PhysicalVolume extends RunnerHelp {
@@ -5,6 +6,7 @@ public class PhysicalVolume extends RunnerHelp {
 
     public PhysicalVolume(String pVName) {
         super(pVName);
+        pHDList = new ArrayList<PhysicalHardDrive>();
     } //also has name, UUID
 
     public void attachPHDList(PhysicalHardDrive pHD) {

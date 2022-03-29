@@ -1,7 +1,6 @@
-import java.util.ArrayList;
 import java.util.UUID;
 
-public class RunnerHelp { //RH has PHD
+public class RunnerHelp {
     private String name;
     private String UUIDuse;
 
@@ -15,6 +14,6 @@ public class RunnerHelp { //RH has PHD
 
     public static String makeUUID() {
         UUID u = UUID.randomUUID();
-        System.out.println(u.toString());
+        return u.toString();
     }
 }
