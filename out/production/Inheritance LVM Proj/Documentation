@@ -154,11 +154,6 @@ public class VolumeGroup extends RunnerHelp implements Serializable {
         instantiates the pVList and lVList to a new ArrayList<respective class>();
     }
 
-    public int getSize() {
-        Calculates and returns the total size of the Volume Group object by adding the size of all its associated
-        Physical Volumes in the pVList.
-    }
-
     public int availableSpace() {
         Calculates and returns the space left in the Volume Group object by subtracting the total size of its associated
         Logical Volumes from the lVList from the returned value of getSize() method.
@@ -171,8 +166,62 @@ public class VolumeGroup extends RunnerHelp implements Serializable {
         Adds the pV parameter variable to the pVList and adds to the size class variable the new pV's associated pHD's size.
     }
 
-    public String getVgName () { return super.getName(); }
-    public String getUUID() { return super.getUUIDuse(); }
-    public ArrayList<PhysicalVolume> getpVList() { return pVList; }
-    public ArrayList<LogicalVolume> getlVList() { return lVList; }
+    public int getSize() {
+        Returns the value of the size class variable.
+    }
+
+    public String getVgName () {
+        Returns the Volume Group's name (super call)
+    }
+
+    public String getUUID() {
+        Returns the UUID of the Volume Group (super call)
+    }
+
+    public ArrayList<PhysicalVolume> getpVList() {
+        Returns the list of associated Physical Volumes from the pVList class variable
+    }
+
+    public ArrayList<LogicalVolume> getlVList() {
+        Returns the list of associated Logical Volumes from the lVList class variable.
+    }
+}
+
+public class PhysicalVolume extends RunnerHelp implements Serializable {
+    Variables:
+    pHD: the associated Physical Hard Drive of the Physical Volume Object
+
+    public PhysicalVolume(String pVName) {
+        1-param constructor: super calls to the RunnerHelp with the pVName variable in the parameter and sets the pHD
+        class variable to null.
+    }
+
+    public void setPHD(PhysicalHardDrive pHD) {
+        Sets the pHD parameter variable to the pHD class variable.
+    }
+
+    public PhysicalHardDrive getPHD() {
+        Returns the value of the associated Physical Hard Drive from the pHD class variable.
+    }
+
+    public String getUUID() {
+        Returns the UUID of the Physical Volume (super call)
+    }
+}
+
+public class PhysicalHardDrive implements Serializable {
+    Variables:
+    name: name of the Physical Hard Drive object
+    size: size of the Physical Hard Drive object
+
+    public PhysicalHardDrive (String name, int size) {
+        2-param constructor: sets the parameter variables-name and size- to its respective class variables.
+    }
+
+    public String getName() {
+        Returns the value of the Physical Hard Drive's name from the name class variable.
+    }
+    public int getSize() {
+        Returns the value of the Physical Hard Drive's size from the size class variable.
+    }
 }

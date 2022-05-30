@@ -263,7 +263,7 @@ public class Commands{
     public void displayLVList() {
         for (int i = 0; i != lVList.size(); i++) {
             LogicalVolume lV = lVList.get(i);
-            System.out.println(lV.getName() + ": [" + lV.getSize() + "] [" + lV.getVG().getName() + "] [" + lV.getUUID() + "]");
+            System.out.println(lV.getName() + ": [" + lV.getSize() + "G] [" + lV.getVG().getName() + "] [" + lV.getUUID() + "]");
         }
     }
 
