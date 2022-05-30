@@ -1,0 +1,178 @@
+public class Runner {
+    main {
+        1. Welcome the user and ask user to give a command.
+        2. Take user's command and generate output depending on what written.
+            Does so by using the userCommand() methods from the Commands class.
+            Repeats process after every time user enters input.
+        3. Cycle stops when the user enters "exit"
+        4. Data saves and program says goodbye.
+    }
+}
+
+public class RunnerHelp() {
+    variables:
+    name: name of the physical v./volume g./logical v.
+    UUID: uuid of the same physical v./volume g./logical v. (as name)
+
+    public RunnerHelp() {
+        0-param Constructor: for serialization (reading files)
+    }
+
+    public RunnerHelp(String name) {
+        1-param Constructor: takes the name in parameter and sets it to the class variable and generates a special UUID with makeUUID() method, which is then set to the UUID class variable
+    }
+
+    public String getName() {
+        Returns value of name variable
+    }
+    public String getUUIDuse() {
+        Returns value of UUID variable
+    }
+
+    public static String makeUUID() {
+        Generates and returns a special UUID as a String data type
+    }
+}
+
+
+public class Commands {
+    Variables:
+    String command: command inputted by user
+    ArrayList<PhysicalHardDrive> pHDList: list of created Physical Hard Drives
+    ArrayList<PhysicalHardDrive> pHDListUsed: list of created Physical Hard Drives that are used in Physical Volumes
+    ArrayList<PhysicalVolume> pVList: list of created Physical Volumes
+    ArrayList<VolumeGroup> vGList: list of created Volume Groups
+    ArrayList<LogicalVolume> lVList: list of created Logical Volumes
+
+    public Commands() {
+        0-param Constructor: instantiates all class variables to a new ArrayList<respective class>() (except command variable)
+    }
+
+    public void userCommand(String command) {
+        Takes the values of the parameter variable and set it to the class variable, command, to determine which method to run.
+        List of commands: commands starting with-
+        install-drive calls createDrive(), list-drives calls displayDrives(), pvcreate calls createPV(),
+        pvlist calls displayPVList(), vgcreate calls createVG(), vgextend calls extendVG(),
+        vglist calls displayVGList(), lvcreate calls createLV(); lvlist calls displayLVList(),
+        and anything else will tell the user that their input is not a valid command
+    }
+
+    public void createDrive() {
+        Splits the value of the class variable, command, in parts to take the drive_name and size of the Physical Hard Drive.
+        Before creating a new Physical Hard Drive object with those variables, make sure that drive has not already been installed:
+        the drive_name needs to be unique. When created, add the object variable to the pHDList class variable.
+    }
+
+    public void displayDrives() {
+        Display all Physical Hard Drives that have been created in the pHDList class variable with its size.
+    }
+
+    public void createPV() {
+        Splits the value of the class variable, command, in parts to take the pv_name and drive_name of the Physical Volume.
+        Before creating a new Physical Volume object with those variables, make sure that the drive does exist in the pHDList
+        class variable, the drive hasn't been used with another Physical Volume yet (not in the pHDListUsed class variable),
+        and this pv_name does not exist already (not in the pVList).
+        When created: add the object variable to the pVList class variable,
+        add the associated Physical Hard Drive object (determine by the drive_name) to the pHDListUsed class variable,
+        add the associated Physical Hard Drive object (determine by the drive_name) to the Physical Volume's own pHD variable.
+    }
+
+    public void displayPVList() {
+        Display all Physical Volumes that have been created in the pVList class variable with its associated Volume Group
+        and UUID.
+    }
+
+    public void createVG() {
+        Splits the value of the class variable, command, in parts to take the vg_name and pv_name of the Volume Group.
+        Before creating a new Volume Group object with those variables, make sure that the pv_name does not exist (not in
+        the pVList class variable), the pv (with the pv_name) is not part of another Volume Group, and the vg_name does
+        not exist (not in vGList class variable). When created: add the Volume Group to the vGList class variable and
+        add the Physical Volume (determined by the pv_name) to the Volume Group object's own pVList ArrayList variable.
+    }
+
+    public void displayVGList() {
+        Display all Volume Groups that have been created in the vGList class variable with its associated total size,
+        available size, Physical Volumes (in its pvList), and UUID.
+    }
+
+    public void extendVG() {
+        Splits the value of the class variable, command, in parts to take the vg_name and the pv_name of the Volume Group.
+        Before adding the Physical Volume (with the pv_name) to the Volume Group, make sure the vg and pv do exist
+        (respectively in the vGList and pVList) and the pv_name is not part of another Volume Group. When conditions are met,
+        add the Physical Volume (determined by the pv_name) to the Volume Group's own pVList ArrayList variable.
+    }
+
+    public void createLV() {
+        Splits the value of the class variable, command, in parts to take the lv_name, size, and vg_name of the Logical Volume.
+        Before creating a new Logical Volume object with those variables, make sure that there is enough available space in
+        the Volume Group (determined by vg_name), the vg_name does exist (in the vGList class variable), and the lv_name does not exist
+        (not in the lVList class variable). When created, add the Logical Volume to the lVList class variable and add the
+        Logical Volume to the Volume Group's own lVList ArrayList variable.
+    }
+
+    public void displayLVList() {
+        Display all Logical Volumes that have been created in the lVList class variable with its associated size, Volume
+        Group, and UUID.
+    }
+
+    public void load() {
+        From the LVMSystem file folder, load and set the values of the object arrays to their respective ArrayList class
+        variables (based on the file names). Use FileInputStream and ObjectInputStream.
+    }
+
+
+    public void save() {
+        From the LVMSystem file folder, save and set the values of the object arrays in the class variables to their
+        respective files (based on the associated object class). Use FileOutputStream and ObjectOutputStream.
+    }
+}
+
+public class LogicalVolume extends RunnerHelp implements Serializable {
+    Variables:
+    size: total size of the Logical Volume
+    vG: associated Volume Group of the Logical Volume object
+
+    public LogicalVolume(String lVName, int size, VolumeGroup vG) {
+        3-param Constructor: super calls to RunnerHelp with the lVName variable in the parameter, and sets the size & vG
+        parameter variables to the class' variables.
+    }
+
+    public String getLVName() { return value of the Logical Volume's name (super call) }
+    public VolumeGroup getVG() { returns the value of the class variable, vG }
+    public int getSize() { return the value of the class variable, size }
+    public String getUUID() { return the value of the object's UUID (super call) }
+}
+
+public class VolumeGroup extends RunnerHelp implements Serializable {
+    Variables:
+    pVList: ArrayList of Physical Volumes associated with the Volume Group object
+    lVList: ArrayList of Logical Volumes associated with the Volume Group object
+    size: total size of the Volume Group
+
+    public VolumeGroup(String vGName) {
+        3-param Constructor: super calls to RunnerHelp with the vGName variable in the parameter, sets the size to 0,
+        instantiates the pVList and lVList to a new ArrayList<respective class>();
+    }
+
+    public int getSize() {
+        Calculates and returns the total size of the Volume Group object by adding the size of all its associated
+        Physical Volumes in the pVList.
+    }
+
+    public int availableSpace() {
+        Calculates and returns the space left in the Volume Group object by subtracting the total size of its associated
+        Logical Volumes from the lVList from the returned value of getSize() method.
+    }
+
+    public void addLVList(LogicalVolume lV) {
+        Adds the lV parameter variable to the lVList
+    }
+    public void addPVList(PhysicalVolume pV) {
+        Adds the pV parameter variable to the pVList and adds to the size class variable the new pV's associated pHD's size.
+    }
+
+    public String getVgName () { return super.getName(); }
+    public String getUUID() { return super.getUUIDuse(); }
+    public ArrayList<PhysicalVolume> getpVList() { return pVList; }
+    public ArrayList<LogicalVolume> getlVList() { return lVList; }
+}

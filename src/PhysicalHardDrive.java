@@ -1,8 +1,10 @@
-public class PhysicalHardDrive {
+import java.io.Serializable;
+
+public class PhysicalHardDrive implements Serializable {
     private String name;
     private int size;
 
-    public PhysicalHardDrive(String name, int size) {
+    public PhysicalHardDrive (String name, int size) {
         this.name = name;
         this.size = size;
     }

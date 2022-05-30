@@ -1,8 +1,11 @@
+import java.io.Serializable;
 import java.util.UUID;
 
-public class RunnerHelp {
+public class RunnerHelp implements Serializable {
     private String name;
     private String UUIDuse;
+
+    public RunnerHelp() { super(); }
 
     public RunnerHelp(String name) {
         this.name = name;
