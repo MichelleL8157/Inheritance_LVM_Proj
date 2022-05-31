@@ -254,7 +254,7 @@ public class Commands{
                 } else {
                     vG.addLVList(lV);
                     lVList.add(lV);
-                    System.out.println(vGName + " successfully installed");
+                    System.out.println(lVName + " successfully installed");
                 }
             }
         }
